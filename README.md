@@ -9,7 +9,7 @@ drawing the best move as an arrow **right on top of the real pieces**.
 No board nearby? Press **Try the demo board**: a simulated camera shows a board on a table and a
 hand plays Morphy's famous *Opera Game* (1858), so you can watch the whole pipeline work.
 
-![Grandmaster Lens](./docs/screenshot.png)
+![Grandmaster Lens](./docs/screenshot.jpg)
 
 ## ✨ Features
 
