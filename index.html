@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0e1311" />
+    <meta name="description" content="Point your camera at a real chessboard. Grandmaster Lens follows the game move by move and coaches you live with Stockfish." />
+    <title>Grandmaster Lens</title>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet" />
+    <script type="module" crossorigin src="./assets/index-DlEVelxD.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-2M1fc5do.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Grandmaster Lens home">
+        <img src="./favicon.svg" alt="" width="34" height="34" />
+        <span>Grandmaster <em>Lens</em></span>
+      </a>
+      <p class="tagline">Your real chessboard, with a grandmaster watching.</p>
+      <a class="gh" href="https://github.com/Hanee2907/grandmaster-lens" target="_blank" rel="noopener">GitHub</a>
+    </header>
+
+    <main class="layout">
+      <section class="card lens-card" aria-label="Camera">
+        <div class="card-head">
+          <h2>Lens</h2>
+          <span class="status" id="status" data-tone="idle">Choose a board to start</span>
+        </div>
+
+        <div class="lens" id="lens">
+          <canvas id="frame" width="640" height="480"></canvas>
+          <canvas id="overlay" width="640" height="480"></canvas>
+          <video id="video" playsinline muted></video>
+
+          <div class="lens-empty" id="lens-empty">
+            <p class="eyebrow">Chess, seen through a camera</p>
+            <h1>Point your camera at a <em>real</em> chessboard</h1>
+            <p class="lede">Grandmaster Lens follows every move you play over the board and coaches you live, with arrows drawn right on the pieces.</p>
+            <div class="cta">
+              <button class="btn btn-gold" id="btn-demo">Try the demo board</button>
+              <button class="btn" id="btn-camera">Use my camera</button>
+            </div>
+            <ol class="steps">
+              <li><b>1</b> Frame the whole board</li>
+              <li><b>2</b> Tap its four corners</li>
+              <li><b>3</b> Play and get coached</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="lens-bar" id="lens-bar" hidden>
+          <p class="hint" id="lens-hint"></p>
+          <div class="lens-actions">
+            <button class="btn btn-sm" id="btn-rotate" hidden>Rotate corners</button>
+            <button class="btn btn-sm" id="btn-recalibrate">Recalibrate</button>
+            <button class="btn btn-sm btn-gold" id="btn-start" hidden>Start watching</button>
+            <button class="btn btn-sm" id="btn-play" hidden>Play demo game</button>
+            <button class="btn btn-sm" id="btn-step" hidden>Next move</button>
+            <button class="btn btn-sm btn-ghost" id="btn-close">Close</button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="side">
+        <section class="card board-card" aria-label="Board">
+          <div class="evalbar" id="evalbar" aria-hidden="true"><div class="evalbar-fill" id="evalbar-fill"></div></div>
+          <div class="board-wrap" id="board-wrap"></div>
+        </section>
+
+        <section class="card coach-card" aria-label="Coach">
+          <div class="card-head">
+            <h2>Coach</h2>
+            <div class="seg" role="radiogroup" aria-label="Coach mode" id="coach-mode">
+              <button role="radio" data-mode="best" aria-checked="true">Best move</button>
+              <button role="radio" data-mode="hint" aria-checked="false">Hint</button>
+              <button role="radio" data-mode="off" aria-checked="false">Off</button>
+            </div>
+          </div>
+          <div class="score-row">
+            <span class="score" id="score">0.0</span>
+            <span class="score-text" id="score-text">Equal position</span>
+            <span class="depth" id="depth"></span>
+          </div>
+          <p class="coach-line" id="coach-line">Waiting for the first move.</p>
+          <button class="btn btn-sm btn-ghost" id="btn-reveal" hidden>Show the move</button>
+          <div class="alert" id="alert" hidden></div>
+        </section>
+
+        <section class="card moves-card" aria-label="Moves">
+          <div class="card-head">
+            <h2>Moves</h2>
+            <div class="acc" id="acc" hidden>
+              <span><i class="dot dot-w"></i>White <b id="acc-w">–</b></span>
+              <span><i class="dot dot-b"></i>Black <b id="acc-b">–</b></span>
+            </div>
+          </div>
+          <ol class="movelist" id="movelist"></ol>
+          <div class="move-actions">
+            <button class="btn btn-sm" id="btn-undo">Undo</button>
+            <button class="btn btn-sm" id="btn-flip">Flip</button>
+            <button class="btn btn-sm" id="btn-new">New game</button>
+            <button class="btn btn-sm" id="btn-fen">Set position</button>
+            <button class="btn btn-sm" id="btn-pgn">Download PGN</button>
+            <a class="btn btn-sm" id="btn-lichess" target="_blank" rel="noopener">Open in Lichess</a>
+          </div>
+          <form class="fen-form" id="fen-form" hidden>
+            <label for="fen-input">Paste a FEN to start from any position</label>
+            <div class="fen-row">
+              <input id="fen-input" spellcheck="false" autocomplete="off" />
+              <button class="btn btn-sm btn-gold" type="submit">Load</button>
+            </div>
+            <p class="fen-error" id="fen-error" hidden></p>
+          </form>
+        </section>
+      </aside>
+    </main>
+
+    <footer class="foot">
+      <p>Engine: <a href="https://stockfishchess.org" target="_blank" rel="noopener">Stockfish</a> (GPLv3) compiled to WebAssembly. Pieces: cburnett by Colin M.L. Burnett (CC BY-SA 3.0). Demo game: Morphy's Opera Game, 1858.</p>
+      <p>Built by <a href="https://github.com/Hanee2907" target="_blank" rel="noopener">Hanee Patel</a></p>
+    </footer>
+
+  </body>
+</html>
